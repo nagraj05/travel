@@ -10,7 +10,7 @@ import { useRouter } from "next/navigation";
 import { useLoginStore } from "@/lib/stores/useLoginStore";
 import { useStore } from "@/lib/useStore";
 import { toast } from "react-toastify";
-import { Loader  } from "lucide-react";
+import { Loader } from "lucide-react";
 
 type Inputs = {
   username: string;
@@ -27,6 +27,7 @@ export default function Login({ onSuccess }: LoginProps) {
   const router = useRouter();
   const { register, handleSubmit } = useForm<Inputs>();
   const setUser = useStore((state) => state.setUser);
+  const setUsername = useStore((state) => state.setUsername);
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     setLoading(true);
@@ -35,7 +36,7 @@ export default function Login({ onSuccess }: LoginProps) {
     try {
       const { data: profile, error: profileError } = await supabase
         .from("profiles")
-        .select("email")
+        .select("email, username")
         .eq("username", data.username)
         .single();
 
@@ -46,7 +47,6 @@ export default function Login({ onSuccess }: LoginProps) {
         return;
       }
 
-      // Now sign in with the email and password
       const { error } = await supabase.auth.signInWithPassword({
         email: profile.email,
         password: data.password,
@@ -60,6 +60,7 @@ export default function Login({ onSuccess }: LoginProps) {
           data: { user },
         } = await supabase.auth.getUser();
         setUser(user);
+        setUsername(profile.username);
         toast.success("Successfully logged in!");
         router.push("/Dashboard");
         if (onSuccess) onSuccess();

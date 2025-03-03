@@ -27,6 +27,8 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { supabase } from "@/lib/supabase";
 import { useRouter } from "next/navigation";
+import { useStore } from "@/lib/useStore";
+
 // Menu items.
 const items = [
   {
@@ -58,10 +60,13 @@ const items = [
 
 export function AppSidebar() {
   const router = useRouter();
+  const username = useStore((state) => state.username);
+
   const handleLogout = async () => {
     await supabase.auth.signOut();
     router.push("/");
   };
+
   return (
     <Sidebar>
       <SidebarHeader>Explore Young</SidebarHeader>
@@ -86,17 +91,17 @@ export function AppSidebar() {
       </SidebarContent>
       <SidebarFooter>
         <DropdownMenu>
-          <DropdownMenuTrigger
-            className="flex flex-row items-center gap-2"
-          >
+          <DropdownMenuTrigger className="flex flex-row items-center gap-2">
             <Avatar>
               <AvatarImage src="https://github.com/shadcn.png" />
-              <AvatarFallback>CN</AvatarFallback>
+              <AvatarFallback>
+                {username ? username.substring(0, 2).toUpperCase() : "UN"}
+              </AvatarFallback>
             </Avatar>
-            <h1>Name</h1>
+            <h1>{username || "User"}</h1>
           </DropdownMenuTrigger>
           <DropdownMenuContent className="w-52 ml-[255px]">
-            <DropdownMenuLabel>Name</DropdownMenuLabel>
+            <DropdownMenuLabel>{username || "User"}</DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuItem
               className="text-red-600 cursor-pointer"
