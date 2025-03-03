@@ -69,8 +69,12 @@ export default function Header() {
       >
         <Tabs value={activeTab} onValueChange={setActiveTab}>
           <TabsList className="grid w-full grid-cols-2">
-            <TabsTrigger value="login">Login</TabsTrigger>
-            <TabsTrigger value="signup">Signup</TabsTrigger>
+            <TabsTrigger value="login" className="cursor-pointer">
+              Login
+            </TabsTrigger>
+            <TabsTrigger value="signup" className="cursor-pointer">
+              Signup
+            </TabsTrigger>
           </TabsList>
           <TabsContent value="login">
             <Login onSuccess={() => setIsOpen(false)} />
