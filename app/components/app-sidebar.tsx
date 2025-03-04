@@ -28,6 +28,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { supabase } from "@/lib/supabase";
 import { useRouter } from "next/navigation";
 import { useStore } from "@/lib/useStore";
+import { ThemeToggle } from "@/app/components/theme-toggle";
 
 // Menu items.
 const items = [
@@ -69,7 +70,10 @@ export function AppSidebar() {
 
   return (
     <Sidebar>
-      <SidebarHeader>Explore Young</SidebarHeader>
+      <SidebarHeader className="flex flex-row justify-between items-center">
+        Explore Young
+        <ThemeToggle />
+      </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>
           <SidebarGroupLabel>Application</SidebarGroupLabel>
