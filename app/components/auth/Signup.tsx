@@ -200,7 +200,14 @@ export default function Signup() {
       </div>
 
       <Button type="submit" disabled={loading}>
-        {loading ? <Loader className="h-4 w-4 animate-spin" /> : "Signup"}
+        {loading ? (
+          <>
+            Signing up...
+            <Loader className="mr-2 h-4 w-4 animate-spin" />
+          </>
+        ) : (
+          "Signup"
+        )}
       </Button>
     </form>
   );

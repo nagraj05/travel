@@ -85,7 +85,14 @@ export default function Login({ onSuccess }: LoginProps) {
       </div>
       {errorMessage && <p className="text-red-500">{errorMessage}</p>}
       <Button type="submit" disabled={loading}>
-        {loading ? <Loader className="h-4 w-4 animate-spin" /> : "Login"}
+        {loading ? (
+          <>
+            Logging in...
+            <Loader className="mr-2 h-4 w-4 animate-spin" />
+          </>
+        ) : (
+          "Login"
+        )}
       </Button>
     </form>
   );
